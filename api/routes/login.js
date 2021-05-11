@@ -17,8 +17,9 @@ module.exports = db => {
     SELECT * FROM users 
     WHERE email = $1 AND password = $2
     `, arr).then(res => {
-      if (res.rows) {
-        const user = res.rows
+      const user = res.rows[0]
+      console.log(user)
+      if (user) {
         const accessToken = jwt.sign({ username: user.email, role: user.role}, accesTokenSecret)
         response.json({
           accessToken
