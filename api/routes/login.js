@@ -1,9 +1,8 @@
 const router = require('express').Router()
 
-const jwt = require('jsonwebtoken')
-const accesTokenSecret = 'superdupersecret'
 
-module.exports = db => {
+
+module.exports = (db, jwt, accessTokenSecret) => {
   router.get('/login', (request, response) => {
     console.log(request)
 
@@ -20,7 +19,7 @@ module.exports = db => {
       const user = res.rows[0]
       console.log(user)
       if (user) {
-        const accessToken = jwt.sign({ username: user.email, role: user.role}, accesTokenSecret)
+        const accessToken = jwt.sign({ id: user.id, username: user.email, role: user.role}, accesTokenSecret)
         response.json({
           accessToken
         })

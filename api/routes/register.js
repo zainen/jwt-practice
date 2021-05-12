@@ -7,12 +7,16 @@ module.exports = (db, jwt, accessTokenSecret) => {
 
   router.post('/new-register', (request, response) => {
     const { user, password, confirm } = request.body
+    const arr = [user, password]
     if (password !== confirm) {
       response.send('The passwords provided do not match')
     } else {
-      const arr = [user, password, confirm]
-      response.send(arr)
-
+      db.query(`
+      INSERT INTO users (email, password) 
+      VALUES ($1, $2)
+      `, arr).then(res => {
+        response.send('user created')
+      })
     }
 
   })
