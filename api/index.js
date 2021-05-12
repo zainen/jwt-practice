@@ -4,10 +4,12 @@ require('dotenv').config()
 const path = require('path')
 
 
-const accesTokenSecret = 'superdupersecret'
+const jwtSecret = 'superdupersecret'
 
 // middle
-const jwt = require('jsonwebtoken')
+const jwt = require('express-jwt')
+const jsonWebToken = require('jsonwebtoken')
+const cors = require('cors')
 
 const PORT = process.env.PORT
 
@@ -15,9 +17,9 @@ const PORT = process.env.PORT
 const db = require('./db')
 
 // Routes
-const test = require('./routes/test')
 const login = require('./routes/login')
 const register = require('./routes/register')
+const getUsers = require('./routes/getUsers')
 
 // schema
 const read = require('./helpers/reader')
@@ -29,17 +31,36 @@ app.get('/api/debug/reset', (request, response) => {
   })
 })
 
-
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({
   extended: true
 }))
 
+app.get('/jwt', (req, res) => {
+  res.json({
+    token: jsonWebToken.sign({ user: 'johndoe' }, jwtSecret)
+  });
+});
+
+// login / register && assign jwt
+app.use('/api', login(db, jsonWebToken, jwtSecret))
+app.use('/api', register(db, jsonWebToken, jwtSecret))
+
+app.use(jwt({secret: jwtSecret, algorithms: ['HS256']}))
+
+
+const foods = [
+  { id: 1, description: 'burritos' },
+  { id: 2, description: 'quesadillas' },
+  { id: 3, description: 'churos' }
+];
+app.get('/foods', (req, res) => {
+  res.json(foods);
+});
 
 // use routes
-app.use('/api', test(db))
-app.use('/api', login(db, jwt, accesTokenSecret))
-app.use('/api', register(db, jwt, accesTokenSecret))
+app.use('/api', getUsers(db))
 
 
 

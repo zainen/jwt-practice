@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-module.exports = (db, jwt, accessTokenSecret) => {
+module.exports = (db, jwt, jwtSecret) => {
   router.get('/register', (request, response) => {
     response.send('hi')
   })
@@ -17,9 +17,9 @@ module.exports = (db, jwt, accessTokenSecret) => {
       RETURNING *
       `, arr).then(res => {
         const user = res.rows[0]
-        const accessToken = jwt.sign({ id: user.id, user: user.email, role: user.role }, accessTokenSecret)
+        const accessToken = jwt.sign({ id: user.id, user: user.email, role: user.role }, jwtSecret)
         response.json({
-          accessToken
+          token: accessToken
         })
       })
     }
