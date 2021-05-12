@@ -14,8 +14,13 @@ module.exports = (db, jwt, accessTokenSecret) => {
       db.query(`
       INSERT INTO users (email, password) 
       VALUES ($1, $2)
+      RETURNING *
       `, arr).then(res => {
-        response.send('user created')
+        const user = res.rows[0]
+        const accessToken = jwt.sign({ id: user.id, user: user.email, role: user.role }, accessTokenSecret)
+        response.json({
+          accessToken
+        })
       })
     }
 
