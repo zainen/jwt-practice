@@ -9,8 +9,7 @@ module.exports = (db, jwt, jwtSecret) => {
   //   response.send('hi')
   // })
 
-  router.get('/login', (request, response) => {
-    // console.log(request.body)
+  router.post('/login', (request, response) => {
     const arr = [request.body.user, request.body.password]
     db.query(`
     SELECT * FROM users 
