@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 require('dotenv').config()
 const path = require('path')
+const db = require('./db')
 
 
 const jwtSecret = 'superdupersecret'
@@ -13,8 +14,12 @@ const cors = require('cors')
 
 const PORT = process.env.PORT
 
-// db
-const db = require('./db')
+// Use Middle
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({
+  extended: true
+}))
 
 // Routes
 const login = require('./routes/login')
@@ -31,17 +36,14 @@ app.get('/api/debug/reset', (request, response) => {
   })
 })
 
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({
-  extended: true
-}))
 
 app.get('/jwt', (req, res) => {
   res.json({
     token: jsonWebToken.sign({ user: 'johndoe' }, jwtSecret)
   });
 });
+
+
 
 // login / register && assign jwt
 app.use('/api', login(db, jsonWebToken, jwtSecret))
