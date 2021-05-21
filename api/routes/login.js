@@ -10,7 +10,7 @@ module.exports = (db, jwt, jwtSecret) => {
   // })
 
   router.post('/login', (request, response) => {
-    const arr = [request.body.user, request.body.password]
+    const arr = [request.body.username, request.body.password]
     db.query(`
     SELECT * FROM users 
     WHERE email = $1 AND password = $2

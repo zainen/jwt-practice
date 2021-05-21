@@ -22,24 +22,48 @@ function App() {
   const [fetchError, setFetchError] = useState(null);
   const [whoAmI, setWhoAmI] = useState(null)
 
-const signIn = async () => {
+// const signIn = async () => {
+//   try {
+//     const body = {
+//       'user': '1234@1234.com',
+//       'password': 1234
+//     }
+//     const { data } = await axios.post(`${apiUrl}/api/login`, body)
+//     if (!data.token) {
+//       setFetchError(data)
+//     }
+//     localStorage.setItem('token', data.token)
+//     setJwt(data.token)
+//   } catch (err) {
+//     console.log('error:', err)
+//     setFetchError(err)
+
+//   }
+// }
+const [username, setUsername] = useState('')
+const [password, setPassword] = useState('')
+const handleChange = (e, type) => {
+  console.log(e.target.value)
+  type(e.target.value)
+}
+const login = async (e) => {
+  const info = {username, password}
+  console.log(info)
   try {
-    const body = {
-      'user': '1234@1234.com',
-      'password': 1234
-    }
-    const { data } = await axios.post(`${apiUrl}/api/login`, body)
-    if (!data.token) {
+    e.preventDefault()
+    const { data } = await axios.post(`${apiUrl}/api/login`, info)
+    if(!data.token) {
       setFetchError(data)
     }
     localStorage.setItem('token', data.token)
     setJwt(data.token)
+    console.log(data)
   } catch (err) {
-    console.log('error:', err)
+    console.log(err)
     setFetchError(err)
-
   }
 }
+
 const findMe = async () => {
   try {
     const { data } = await axios.post(`${apiUrl}/api/whoAmI`, jwt)
@@ -53,7 +77,16 @@ const findMe = async () => {
 }
 return (
     <>
-      <section style={{ marginBottom: '10px' }}>
+    <section>
+      <form action='POST' >
+        <label >Username: </label>
+        <input type='Text' id='username' onChange={(e) => handleChange(e, setUsername)}/>
+        <label >Password: </label>
+        <input type='Password' id='password' onChange={(e) => handleChange(e, setPassword)}/>
+        <button type='Submit' onClick={(e) => login(e)}>Login</button>
+      </form>
+    </section>
+      {/* <section style={{ marginBottom: '10px' }}>
 
         {jwt && (
           <pre>
@@ -75,7 +108,7 @@ return (
         {whoAmI && (
           <h4>You are: {whoAmI}</h4>
         )}
-      </section>
+      </section> */}
     </>
   );
 }
