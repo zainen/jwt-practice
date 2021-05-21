@@ -20,6 +20,7 @@ function App() {
   const storedJwt = localStorage.getItem('token');
   const [jwt, setJwt] = useState(storedJwt || null);
   const [fetchError, setFetchError] = useState(null);
+  const [whoAmI, setWhoAmI] = useState(null)
 
 const signIn = async () => {
   try {
@@ -36,6 +37,17 @@ const signIn = async () => {
   } catch (err) {
     console.log('error:', err)
     setFetchError(err)
+
+  }
+}
+const findMe = async () => {
+  try {
+    const { data } = await axios.post(`${apiUrl}/api/whoAmI`, jwt)
+    console.log(data)
+    setWhoAmI(data.user)
+  } catch (err) {
+    console.log(err)
+    // setFetchError(err)
 
   }
 }
@@ -56,6 +68,12 @@ return (
           </button>
         {fetchError && (
           <p style={{ color: 'red' }}>{fetchError}</p>
+        )}
+      </section>
+      <section>
+        <button onClick={() => findMe()}>Who Am I</button>
+        {whoAmI && (
+          <h4>You are: {whoAmI}</h4>
         )}
       </section>
     </>

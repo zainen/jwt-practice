@@ -25,6 +25,7 @@ app.use(express.urlencoded({
 const login = require('./routes/login')
 const register = require('./routes/register')
 const getUsers = require('./routes/getUsers')
+const whoAmI = require('./routes/whoAmI')
 
 // schema
 const read = require('./helpers/reader')
@@ -51,6 +52,7 @@ app.use('/api', register(db, jsonWebToken, jwtSecret))
 
 app.use(jwt({secret: jwtSecret, algorithms: ['HS256']}))
 
+app.use('/api', whoAmI(jsonWebToken, jwtSecret))
 
 const foods = [
   { id: 1, description: 'burritos' },
