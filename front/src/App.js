@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 const apiUrl = 'http://localhost:8000';
@@ -40,6 +40,13 @@ function App() {
 
 //   }
 // }
+const [products, setProducts] = useState(null)
+useEffect(() => {
+    axios.get(`${apiUrl}/api/products`).then(res => {
+      setProducts(res.data)
+      console.log(products)
+    })
+  }, [])
 const [username, setUsername] = useState('')
 const [password, setPassword] = useState('')
 const handleChange = (e, type) => {

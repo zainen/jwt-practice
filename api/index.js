@@ -26,6 +26,7 @@ const login = require('./routes/login')
 const register = require('./routes/register')
 const getUsers = require('./routes/getUsers')
 const whoAmI = require('./routes/whoAmI')
+const products = require('./routes/products')
 
 // schema
 const read = require('./helpers/reader')
@@ -49,6 +50,7 @@ app.get('/jwt', (req, res) => {
 // login / register && assign jwt
 app.use('/api', login(db, jsonWebToken, jwtSecret))
 app.use('/api', register(db, jsonWebToken, jwtSecret))
+app.use('/api', products(db))
 
 app.use(jwt({secret: jwtSecret, algorithms: ['HS256']}))
 
