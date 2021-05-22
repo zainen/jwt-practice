@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import ProductListings from './components/ProductListings'
+
+
+
 const apiUrl = 'http://localhost:8000';
 axios.interceptors.request.use(
   config => {
@@ -16,12 +20,16 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+
+
+
 function App() {
   const storedJwt = localStorage.getItem('token');
   const [jwt, setJwt] = useState(storedJwt || null);
   const [fetchError, setFetchError] = useState(null);
   const [whoAmI, setWhoAmI] = useState(null)
-
+  
 // const signIn = async () => {
 //   try {
 //     const body = {
@@ -40,13 +48,25 @@ function App() {
 
 //   }
 // }
-const [products, setProducts] = useState(null)
-useEffect(() => {
-    axios.get(`${apiUrl}/api/products`).then(res => {
-      setProducts(res.data)
-      console.log(products)
-    })
-  }, [])
+  const [products, setProducts] = useState([])
+  useEffect(() => {
+      axios.get(`${apiUrl}/api/products`).then(res => {
+        setProducts(res.data)
+        console.log(products)
+      })
+    }, [])
+    
+  const items = products.map(item => {
+    return (<ProductListings 
+      key={item.id}
+      name={item.name}
+      description={item.description}
+      price={item.price}
+      quantity={item.quantity}
+      photo_url={item.photo_url}
+      />)
+  })
+  console.log('its me', items)
 const [username, setUsername] = useState('')
 const [password, setPassword] = useState('')
 const handleChange = (e, type) => {
@@ -82,6 +102,7 @@ const findMe = async () => {
 
   }
 }
+console.log(products)
 return (
     <>
     <section>
@@ -93,6 +114,7 @@ return (
         <button type='Submit' onClick={(e) => login(e)}>Login</button>
       </form>
     </section>
+    {items}
       {/* <section style={{ marginBottom: '10px' }}>
 
         {jwt && (
