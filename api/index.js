@@ -52,9 +52,9 @@ app.use('/api', login(db, jsonWebToken, jwtSecret))
 app.use('/api', register(db, jsonWebToken, jwtSecret))
 app.use('/api', products(db))
 
-app.use(jwt({secret: jwtSecret, algorithms: ['HS256']}))
+// app.use(jwt({secret: jwtSecret, algorithms: ['HS256']}))
 
-app.use('/api', whoAmI(jsonWebToken, jwtSecret))
+// app.use('/api', whoAmI(jsonWebToken, jwtSecret))
 
 const foods = [
   { id: 1, description: 'burritos' },
@@ -66,7 +66,7 @@ app.get('/foods', (req, res) => {
 });
 
 // use routes
-app.use('/api', getUsers(db))
+// app.use('/api', getUsers(db))
 
 
 

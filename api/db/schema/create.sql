@@ -30,11 +30,11 @@ VALUES
 
 INSERT INTO products (name, photo_url, description, price, quantity, owner_id)
 VALUES
-('lamp', 'https://imgur.com/gallery/YwRiA2j', 'I LOVE LAMP', 24.24, 100, 1),
-('weird lamp', 'https://imgur.com/gallery/ciQTbLJ', 'interesting....', 50.50, 20, 2),
-('hat', 'https://imgur.com/gallery/GuPonJS', 'Santas favouite', 5.00, 20, 1),
-('sad car', 'https://imgur.com/gallery/wPSFJ', 'looks a little down', 1000.00, 1, 3),
-('Nice cat', 'https://imgur.com/gallery/wYTCtRu', 'The nicest of cats', 200.00, 1, 1),
-('Awkward Spoons', 'https://imgur.com/gallery/Zyfkk7B', 'Not super comfy in the hands but look good!', 50.00, 30, 2),
-('Game of Codes', 'https://imgur.com/gallery/E7gNfYa', 'I wonder why my e key is stuck', 100.00, 1, 1),
-('Zelda', 'https://imgur.com/gallery/xEVj6', 'Tri-Force', 49.99, 5, 1);
+('lamp', 'https://i.imgur.com/YwRiA2j.jpg', 'I LOVE LAMP', 24.24, 100, 1),
+('weird lamp', 'https://i.imgur.com/ciQTbLJ.jpg', 'interesting....', 50.50, 20, 2),
+('hat', 'https://i.imgur.com/GuPonJS.jpg', 'Santas favouite', 5.00, 20, 1),
+('sad car', 'https://i.imgur.com/fxzyWTi.jpg', 'looks a little down', 1000.00, 1, 3),
+('Nice cat', 'https://i.imgur.com/wYTCtRu.jpg', 'The nicest of cats', 200.00, 1, 1),
+('Awkward Spoons', 'https://i.imgur.com/Zyfkk7B.jpeg', 'Not super comfy in the hands but look good!', 50.00, 30, 2),
+('Game of Codes', 'https://i.imgur.com/E7gNfYa.jpg', 'I wonder why my e key is stuck', 100.00, 1, 1),
+('Zelda', 'https://i.imgur.com/HPEwq3C.jpg', 'Tri-Force', 49.99, 5, 1);
